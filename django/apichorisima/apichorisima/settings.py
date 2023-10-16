@@ -77,18 +77,15 @@ WSGI_APPLICATION = 'apichorisima.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 import os
+import cx_Oracle
+cx_Oracle.init_oracle_client(config_dir="\dbwallet")
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.oracle",
-        "NAME": "orcl",
-        "USER": "entrega2",
-        "PASSWORD": "entrega2",
-        'TEST': {
-            'USER': 'default_test',
-            'TBLSPACE': 'default_test_tbls',
-            'TBLSPACE_TMP': 'default_test_tbls_tmp',
-        },
+        "NAME": "bdclases_high",
+        "USER": "intento999",
+        "PASSWORD": "Sebastian6eO2412!",
     },
 }
 

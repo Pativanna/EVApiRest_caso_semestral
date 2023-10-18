@@ -1,10 +1,6 @@
-from django.urls import path, include
-from rest_framework import routers
-from core import views
-
-router = routers.DefaultRouter()
-router.register(r'users',views.UserViewSet)
+from django.urls import path
+from core.views import lista_usuarios
 
 urlpatterns=[
-    path('',include(router.urls))
+    path('lista_usuarios', lista_usuarios, name= "Lista Usuarios")
 ]

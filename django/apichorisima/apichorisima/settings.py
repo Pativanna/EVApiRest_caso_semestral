@@ -55,6 +55,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8100",
+    "http://localhost:8000",
 ]
 
 ROOT_URLCONF = 'apichorisima.urls'

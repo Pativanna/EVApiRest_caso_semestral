@@ -10,6 +10,8 @@ COPY . /appdock
 # Instala las dependencias de tu proyecto
 RUN pip install -r requirements.txt
 
+ENV TNS_ADMIN=/wallet
+
 # Expone el puerto 8000, que es el puerto por defecto de Django
 EXPOSE 8000
 

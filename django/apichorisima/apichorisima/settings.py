@@ -103,11 +103,9 @@ DATABASES={
     'NAME':'bdclases_high',
     'USER':'Djangobase1234', 
     'PASSWORD':'Seba6eO2412!',#Please provide the db password here
-    'OPTIONS':{
-        'dsn': 'wallet/tnsnames.ora'
-        }
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

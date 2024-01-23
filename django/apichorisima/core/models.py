@@ -1,13 +1,48 @@
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 
-# Create your models here.
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, role=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
 
-class user(models.Model):
-    correo = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+        if not email:
+            raise ValueError('El email electrónico es obligatorio')
+
+        user = self.model(email=self.normalize_email(email), role=role, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, role='administrador', **extra_fields)
+
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    EMAIL = 'email'
+    ALUMNO = 'alumno'
+    PROFESOR = 'profesor'
+    ADMINISTRADOR = 'administrador'
+    ROLE_CHOICES = [
+        (ALUMNO, 'Alumno'),
+        (PROFESOR, 'Profesor'),
+        (ADMINISTRADOR, 'Administrador'),
+    ]
+
+    email = models.EmailField(max_length=100, unique=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default=ALUMNO)
     activo = models.BooleanField(default=True)
 
-class holahola1234(models.Model):
-    correo = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    activo = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return self.email
+    

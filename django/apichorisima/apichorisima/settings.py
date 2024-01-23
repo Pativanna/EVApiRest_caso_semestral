@@ -40,19 +40,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'rest_framework',
-#    'rest_framework.authtoken',
     'core',
+    'rest_framework',
 ]
 
-#REST_FRAMEWORK = {
-#    'DEFAULT_AUTHENTICATION_CLASSES':(
-#        'rest_framework.authentication.TokenAuthentication',
-#    ),
-#    'DEFAULT_PERMISSION_CLASSES':(
-#        'rest_framework.permissions.IsAuthenticated',
-#    ),
-#}
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_PAYLOAD_HANDLER': 'apichorisima.utils.jwt_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apichorisima.utils.jwt_response_payload_handler',
+}
+
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'email',
+    'USER_ID_CLAIM': 'email',
+}
+
+AUTHENTICATION_BACKENDS = [
+    'core.backends.CustomUserAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,15 +111,17 @@ DATABASES={
     'default':
     {
     'ENGINE':'django.db.backends.oracle',
-    'NAME':'bdclases_high',
-    'USER':'Djangobase1234', 
-    'PASSWORD':'Seba6eO2412!',#Please provide the db password here
+    'NAME':'xe',
+    'USER':'pato', 
+    'PASSWORD':'pato',#Please provide the db password here
     }
 }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'core.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
